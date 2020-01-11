@@ -1,38 +1,21 @@
 -module(process_manager).
 -export([register/2, kill/1, init/0, destroy/0]).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Process manager
-%% Stores PIDs to kill if needed
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% przechowuje PIDy
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: init
-%% Purpose: Initiates data container that stores PIDs.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-init() -> 
+% tworzy kontener na PIDy
+init() ->
     io:format("init process manager: ~p~n", [self()]),
     ets:new(pids, [set, named_table, public]).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: register
-%% Purpose: Registers process of a given Key and PID.
-%% Arguments: Key, PID.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%zapisuje podany proces po kluczu i PID
 register(Key, PID) -> ets:insert(pids, {Key, PID}).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: kill
-%% Purpose: Kills process of a given Key.
-%% Arguments: Key
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-kill(Key) -> 
+% ubija dany proces po kluczu
+kill(Key) ->
     PID = element(2, hd(ets:lookup(pids, Key))),
     io:format("Process Manager: ~p is about to kill -> ~p (~p)~n", [self(), PID, Key]),
     exit(PID, stop).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: destroy
-%% Purpose: Destroys data container that stores PIDs.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
+
+% usuwa cały kontener z PIDami
 destroy() -> ets:delete(pids).

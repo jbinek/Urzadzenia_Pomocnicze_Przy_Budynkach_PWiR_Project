@@ -1,30 +1,26 @@
 -module(runner).
 -export([start/0, stop/0, gui/0]).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Runner
-%% Runs the whole application.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% silnik aplikacji
 
 launchTimeInterval() -> 2.
 stopTimeInterval() -> 1.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: start
-%% Purpose: Creates all necessary processes and launches application. 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-start() -> 
 
-    % Process Manager
+% towrzy wszyztkie potrzebne zasoby i uruchamia aplikację
+start() ->
+
+
 
     process_manager:init(),
 
-    % Controller
 
+    %centrum kontroli
     ControllerPID = spawn(fun () -> controller:start() end),
     io:format("Run [controller] process: ~p~n", [ControllerPID]),
     timer:sleep(timer:seconds(launchTimeInterval())),
 
-    % Signal consumers
 
+    %klienci
     AlarmPID = spawn(fun () -> alarm:start() end),
     io:format("Run [Alarm] process: ~p~n", [AlarmPID]),
     timer:sleep(timer:seconds(launchTimeInterval())),
@@ -37,10 +33,10 @@ start() ->
     io:format("Run [Fire Sprinkler] process: ~p~n", [SprinklerPID]),
     timer:sleep(timer:seconds(launchTimeInterval())),
 
-    
 
-    % Signal emitters
 
+
+    %urzadzenia
     AI_PID = spawn(fun () -> anti_intrusion_sensor:start() end),
     io:format("Run [Anti Intrusion Sensor] process: ~p~n", [AI_PID]),
     timer:sleep(timer:seconds(launchTimeInterval())),
@@ -52,14 +48,10 @@ start() ->
     SmokePID = spawn(fun () -> smoke_sensor:start() end),
     io:format("Run [Smoke Sensor] process: ~p~n", [SmokePID]).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: stop
-%% Purpose: Stops the application.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%zatrzymuje działanie aplikacji
 stop() ->
 
-    % Signal emitters
-
+    %urządzenia
     smoke_sensor:stop(),
     timer:sleep(timer:seconds(stopTimeInterval())),
 
@@ -69,8 +61,7 @@ stop() ->
     anti_intrusion_sensor:stop(),
     timer:sleep(timer:seconds(stopTimeInterval())),
 
-    % Signal consumers
-
+    %klienci
     alarm:stop(),
     timer:sleep(timer:seconds(stopTimeInterval())),
 
@@ -80,37 +71,36 @@ stop() ->
     fire_sprinkler:stop(),
     timer:sleep(timer:seconds(stopTimeInterval())),
 
-    % Controller
-
+    %centurm kontroli
     controller:stop(),
 
-    % Process Manager
 
     process_manager:destroy().
 
 
-gui() -> 
+gui() ->
     P_PID = self(),
     Wx=wx:new(),
-    Frame=wxFrame:new(Wx, -1, "iHome GUI"),
+    Frame=wxFrame:new(Wx, -1, "Urządzenia pomocnicze przy budynkach GUI"),
     Panel = wxPanel:new(Frame),
-    StartButton = wxButton:new(Panel, 12, [{label,"START"}]),
-    wxButton:connect(StartButton, command_button_clicked, [{callback, 
+    StartButton = wxButton:new(Panel, 12, [{label,"URUCHOM"}, {pos, {50, 50}}]),
+    wxButton:connect(StartButton, command_button_clicked, [{callback,
         fun(_, _) -> P_PID ! start end }]),
     StopButton = wxButton:new(Panel, 12, [{label,"STOP"}, {pos, {50, 50}}]),
-    wxButton:connect(StopButton, command_button_clicked, [{callback, 
+    wxButton:connect(StopButton, command_button_clicked, [{callback,
         fun(_, _) -> P_PID ! stop end }]),
     wxFrame:show(Frame),
 
     awaitStart().
 
-
-awaitStart() -> 
-    receive 
+%kontroler GUI
+awaitStart() ->
+    receive
         start -> start()
     end,
     awaitStop().
 
+%kontroler GUI
 awaitStop() ->
     receive
         stop -> stop()
