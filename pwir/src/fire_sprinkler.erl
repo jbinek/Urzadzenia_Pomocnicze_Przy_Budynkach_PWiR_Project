@@ -1,59 +1,43 @@
 -module(fire_sprinkler).
 -export([start/0, stop/0]).
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% fire_sprinkler simulates behavior of fire sprinkler controller.
-%% Functions: start, stop, listen
-%%%%%%%%%%%%%%%%%%%%%%
+% symuluje działanie zraszacza przeciwpożarowego
 
 port() -> 8089.
 id() -> sprinkler.
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% Function: start
-%% Registers fire sprinkler controller on the server,
-%% Starts the alarm sensor on the given port.
-%%%%%%%%%%%%%%%%%%%%%%
-
-
+% rejestruje zraszacz na serwerze, przypisuje ID, uruchamia zraszacz na porcie
 start() ->
     try
-        io:format("Starting fire sprinkler controller with Id: ~p...~n", [id()]),
+        io:format("Zraszacz przeciwpożarowy uruchamia się, ID = ~p...~n", [id()]),
         emitter_utils:register(controller:address(), controller:port(), id(), port()),
         process_manager:register(id(), self()),
         listen(),
         start
     catch
-        _:_ -> io:format("Single process may handle only one fire sprinkler controller!~n", []),
-        error
+        _:_ -> io:format("Za duzo procesow przypisanych do jednego zraszacza!~n", []),
+            error
     end.
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% Function: stop
-%% Stops the fire sprinkler controller.
-%%%%%%%%%%%%%%%%%%%%%%
-
+% kończy pracę zraszacza
 stop() ->
     try
         emitter_utils:unregister(controller:address(), controller:port(), id()),
-        io:format("Fire sprinkler controller which Id is ~p is being stopped~n", [id()]),
+        io:format("Zraszacz przecipożarowy o ID = ~p kończy pracę! ~n", [id()]),
         process_manager:kill(id())
     catch
-        _:_ -> io:format("There are no fire sprinkler controllers working on this process!~n"),
-        error
+        _:_ -> io:format("Żaden zraszacz nie jest uruchomiony!~n"),
+            error
     end.
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% Function: listen
-%% Waits for information whether fire sprinkler should be turned on or off.
-%%%%%%%%%%%%%%%%%%%%%%
 
+% decyduje czy załączyć zraszacz czy nie
 listen() ->
     case consumer_utils:listen(port()) of
         {_, _, on} ->
-            io:format("Fire sprinkler is being turned on ~n");
+            io:format("Zraszacz przeciwpożarowy uruchamia się ~n");
         {_, _, off} ->
-            io:format("Fire sprinkler is being turned off ~n");
+            io:format("Zraszacz przeciwpożarowy wyłącza się ~n");
         _ ->
             nil
     end,
