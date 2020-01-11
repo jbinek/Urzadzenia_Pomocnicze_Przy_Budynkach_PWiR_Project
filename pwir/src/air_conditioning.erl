@@ -1,57 +1,50 @@
 -module(air_conditioning).
 -export([start/0, stop/0]).
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% air_conditioning simulates behavior of air conditioner controller.
-%% Functions: start, stop, listen
-%%%%%%%%%%%%%%%%%%%%%%
+% air_conditioning symuluje zachowanie klimatyzacji
 
 port() -> 8081.
 id() -> ac.
 
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% Function start
-%% Registers air conditioner controller on the server,
-%% Starts the air conditioner controller on the given port.
-%%%%%%%%%%%%%%%%%%%%%%
+% START
+% Rejestruje id klimatyzacji w centrum kontroli na serwerze
+% Zaczyna działanie klimatyzacji na podanym porcie
+
 start() ->
     try
-        io:format("Starting air conditioner controller with Id: ~p...~n", [id()]),
+        io:format("Klimatyzacja uruchamia się, ID = ~p...~n", [id()]),
         emitter_utils:register(controller:address(), controller:port(), id(), port()),
         process_manager:register(id(), self()),
         listen(),
         start
     catch
-        _:_ -> io:format("Single process may handle only one air conditioner controller!~n", []),
+        _:_ -> io:format("Za dużo procesów przypisanych do jednego czujnika!~n", []),
         error
     end.
 
-  %%%%%%%%%%%%%%%%%%%%%%
-  %% Function stop
-  %% Stops the air conditioner controller.
-  %%%%%%%%%%%%%%%%%%%%%%
+% STOP
+% Zatrzymuje klimatyzację
+
 stop() ->
     try
         emitter_utils:unregister(controller:address(), controller:port(), id()),
-        io:format("Air conditioner controller which Id is ~p is being stopped ~n", [id()]),
+        io:format("Klimatyzacja o ID = ~p kończy pracę ~n", [id()]),
         process_manager:kill(id())
     catch
-        _:_ -> io:format("There are no air conditioner controllers working on this process!~n"),
+        _:_ -> io:format("Klimatyzacja nie jest uruchomiona!~n"),
         error
     end.
 
-  %%%%%%%%%%%%%%%%%%%%%%
-  %% Function listen
-  %% Waits for information whether air conditioner controller should be switched on or off.
-  %%%%%%%%%%%%%%%%%%%%%%
+% LISTEN
+% Czeka na informację o włączeniu lub wyłączeniu klimatyzacji
 
 listen() ->
     case consumer_utils:listen(port()) of
         {_, _, on} ->
-            io:format("Turning air conditioning on ~n");
+            io:format("Klimatyzacja włącza się ~n");
         {_, _, off} ->
-            io:format("Turning air conditioning off ~n");
+            io:format("Klimatyzacja wyłącza się ~n");
         _ ->
             nil
     end,

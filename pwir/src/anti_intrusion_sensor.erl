@@ -1,49 +1,40 @@
 -module(anti_intrusion_sensor).
 -export([start/0, stop/0]).
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% anti_intrusion_sensor simulates behavior of anti intrusion sensor.
-%% Functions: start, stop, emit
-%%%%%%%%%%%%%%%%%%%%%%
+% anti_intrusion_sensor symuluje zachowanie czujnika antywłamaniowego
 
 id() -> intrusion.
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% Function: start
-%% Registers anti intrusion sensor on the server,
-%% Starts the anti intrusion sensor on the given port.
-%%%%%%%%%%%%%%%%%%%%%%
+% START
+% Rejestruje id czujnika antywłamaniowego w centrum kontroli na serwerze
+% Zaczyna działanie czujnika na podanym porcie
 
 start() ->
     try
-        io:format("Starting anti intrusion sensor with Id: ~p...~n", [id()]),
+        io:format("Czujnik antywłamaniowy uruchamia się, ID = ~p...~n", [id()]),
         emitter_utils:register(controller:address(), controller:port(), id(), 0),
         process_manager:register(id(), self()),
         emit()
     catch
-        _:_ -> io:format("Single process may handle only one anti intrusion sensor!~n", []),
+        _:_ -> io:format("Za dużo procesów przypisanych do jednego czujnika!~n", []),
         error
     end.
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% Function: stop
-%% Stops the anti intrusion sensor sensor.
-%%%%%%%%%%%%%%%%%%%%%%
+% STOP
+% Zatrzymuje czujnik antywłamaniowy
 
 stop() ->
     try
         emitter_utils:unregister(controller:address(), controller:port(), id()),
-        io:format("Anti intrusion sensor which Id is ~p is being stopped~n", [id()]),
+        io:format("Czujnik antywłamaniowy o ID = ~p kończy pracę ~n", [id()]),
         process_manager:kill(id())
     catch
-        _:_ -> io:format("There are no anti intrusion sensors working on this process!~n"),
+        _:_ -> io:format("Czujnik antywłamaniowy nie jest uruchomiony!~n"),
         error
     end.
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% Function: emit
-%% Every 10 seconds sends to controller information whether intrusion has occurred.
-%%%%%%%%%%%%%%%%%%%%%%
+% EMIT
+% Czujnik co 25 sekund wysyła do centrum kontroli informację o potencjalnym włamaniu
 
 emit() ->
     case rand:uniform(1) of
@@ -52,5 +43,5 @@ emit() ->
         _ ->
         emitter_utils:sendData(controller:address(), controller:port(), id(), no)
     end,
-    timer:sleep(timer:seconds(10)),
+    timer:sleep(timer:seconds(25)),
     emit().

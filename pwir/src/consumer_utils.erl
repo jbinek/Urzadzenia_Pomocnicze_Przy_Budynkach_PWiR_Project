@@ -1,45 +1,32 @@
 -module(consumer_utils).
 -export([listen/1]).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Helpful functions that simplify communication with UDP protocol.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: read
-%% Purpose: Reads data send using UDP protocol on a given port for given amount of milliseconds.
-%% Arguments: Port and amount of milliseconds to wait.
-%% Returns: Tuple {SenderAddress, SenderPort, Data} or {}
-%%     if error has occurred or no data has been read.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Funkcje pomocne przy komunikacji protokołem UDP
+
+% LISTEN
+% Nasłuchuje danych wysłanych przez UDP na podanym porcie przez konkretny czas w ms
+
 listen(Port, Timeout) ->
     case gen_udp:open(Port, [binary, {active, false}]) of
         {ok, Socket} ->
             Return = listenSocket(Socket, Timeout);
         {error, eaddrinuse} ->
-            io:format("Port ~p is being used by other process!~n", [Port]),
+            io:format("Port ~p jest używany przez inny proces!~n", [Port]),
             Return = {error, eaddrinuse};
         {error, Reason} ->
             Return = {error, Reason}
     end,
     Return.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: read
-%% Purpose: Reads data send using UDP protocol on a given port for 100000 milliseconds.
-%% Arguments: Port.
-%% Returns: Tuple {SenderAddress, SenderPort, Data} or {}
-%%     if error has occurred or no data has been read.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LISTEN
+% Nasłuchuje danych wysłanych przez UDP na podanym porcie przez 100000 ms
+
 listen(Port) ->
     listen(Port, 100000).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: recv
-%% Purpose: Reads data send using UDP protocol on a given socket for given amount of milliseconds.
-%% Arguments: Socket and amount of milliseconds to wait.
-%% Returns: Tuple {SenderAddress, SenderPort, Data} or {}
-%%     if error has occurred or no data has been read.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LISTENSOCKET
+% Nasłuchuje danych wysłanych przez UDP na podanym gnieździe przez konkretny czas w ms
+
 listenSocket(Socket, Timeout) ->
     case gen_udp:recv(Socket, 0, Timeout) of
         {ok, {Address, Port, Packet}} ->

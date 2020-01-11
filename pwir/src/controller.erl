@@ -1,27 +1,21 @@
 -module(controller).
 -export([start/0, stop/0, port/0, address/0, handleTemperature/1, handleSmoke/1, hanleIntrusion/1]).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Main server of the application.
-%% Exchanges data between clients and 
-%% calls functions based on data received
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Główny server aplikacji - wymienia dane między klientami i wywołuje funkcje w oparciu o otrzymane dane
 
 port() -> 5000.
 address() -> {127,0,0,1}.
 id() -> controller.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: start
-%% Purpose: Launches server on a given port and creates all necessary data containers. 
-%% If given port is already taken error is returned.
-%% Arguments: Port.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% START
+% Uruchamia server na podanym porcie i tworzy potrzebne kontrolery danych
+
 start() ->
     try
         ets:new(clientSet, [set, named_table, public]),
         ets:new(dataSet, [set, named_table, public]),
         ets:new(signalHandlers, [bag, named_table, public]),
-        io:format("Starting server on port ~p...~n", [port()]),
+        io:format("Serwer na porcie ~p uruchamia się...~n", [port()]),
 
         ets:insert(signalHandlers, {temp, fun handleTemperature/1}),
         ets:insert(signalHandlers, {smoke, fun handleSmoke/1}),
@@ -31,16 +25,13 @@ start() ->
         listen(),
         start
     catch
-        A:B -> io:format("Error while running controller process: ~p, ~p~n", [A, B]),
+        A:B -> io:format("Error podczas uruchamiania procesu: ~p, ~p~n", [A, B]),
         error
     end.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: stop
-%% Purpose: Deletes server on a given port and deletes all existing data containers. 
-%% If given port is already free error is returned.
-%% Arguments: Port.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% STOP
+% Zatrzymuje serwer i usuwa wszystkie istniejące kontenery danych
+
 stop() ->
     try
         ets:delete(clientSet),
@@ -53,12 +44,9 @@ stop() ->
         error
     end.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: listen
-%% Purpose: Reads data coming from the server and then reacts asynchronously 
-%% based on data received.
-%% Arguments: Port.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LISTEN
+% Nasłuchuje i wywołuje asynchronicznie funkcje
+
 listen() ->
     case consumer_utils:listen(port()) of
         {error, _} ->
@@ -70,45 +58,37 @@ listen() ->
             stop()
     end.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: act
-%% Purpose: Reacts on received data based on their format.
-%% Arguments: Client's address, tuple with data.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ACT
+% Reaguje na otrzymane dane
+
 act(ClientAddress, {register, Id, ClientPort}) ->
-    io:format("register o id ~p.~n", [Id]),
     ets:insert(clientSet, {Id, ClientAddress, ClientPort}),
-    io:format("Registering client with id ~p~n", [Id]);
+    io:format("Rejestracja klient o ID = ~p~n", [Id]);
 act(_, {data, Id, Data}) ->
     ets:insert(dataSet, {Id, Data}),
-    io:format("Received data from ID ~p: ~p~n", [Id, Data]),
+    io:format("Otrzymano dane od klienta o ID = ~p: ~p~n", [Id, Data]),
     handleSignal(Id);
 act(_, {delete, Id}) ->
     try
         ets:delete(clientSet, Id),
-        io:format("Deleting client with id ~p.~n", [Id])
+        io:format("Zatrzymywanie klienta o ID = ~p.~n", [Id])
     catch
-        error:badarg -> io:format("No working client with id ~p!~n", [Id])
+        error:badarg -> io:format("Brak klienta o ID = ~p!~n", [Id])
     end.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: retrieveData
-%% Purpose: Returns data, which came from client of given ID.
-%% Arguments: client's ID.
-%% Returns: Saved data or nil, of no data has been received from client of given ID.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% RETRIEVEDATA
+% Zwraca dane od klienta
+
 retrieveData(Id) ->
     case ets:lookup(dataSet, Id) of
         [] -> nil;
         [{Id, Data}] -> Data
     end.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: forwardSignal
-%% Purpose: Sends data to client of given ID.
-%% Arguments: client's ID, data to send.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FORWARDSIGNAL
+% Wysyła dane do klienta
+
 forwardSignal(Id, Data) ->
     case ets:lookup(clientSet, Id) of
         [] -> nil;
@@ -116,11 +96,9 @@ forwardSignal(Id, Data) ->
             emitter_utils:send(ClientAddress, ClientPort, Data)
     end.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: exec_func
-%% Purpose: Calls all functions that react on receiving data from client of given ID.
-%% Arguments: client's ID
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HANDLESIGNAL
+% Wywołuje funkcje w zależności od otrzymanych danych
+
 handleSignal(Id) ->
     case ets:lookup(signalHandlers, Id) of
         [] -> nil;
@@ -129,45 +107,38 @@ handleSignal(Id) ->
     end.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: temp
-%% Purpose: Turns ac on or off based on temperature received.
-%% Arguments: Temperature value.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HANDLETEMPERATURE
+% Reaguje na temperaturę
 handleTemperature(nil) -> nil;
 handleTemperature(Data) when Data > 28 ->
-    log("Air Conditioning ON, temperature : " ++ integer_to_list(Data)),
+    log("Klimatyzacja WŁĄCZONA, temperatura: " ++ integer_to_list(Data)),
     forwardSignal(ac, on);
 handleTemperature(_)  ->
-    log("Temperature is fine, Air Conditioning OFF"),
+    log("Temperatura w porządku, wyłączanie klimatyzacji"),
     forwardSignal(ac, off).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: alarm
-%% Purpose: Reacts on anti intrusion sensor. 
-%% If intrusion got detected alarm is being activated.
-%% Arguments: Alarm state.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HANDLEINTRUSION
+% Reaguje na czujnik antywłamaniony
+
 hanleIntrusion(yes) ->
-    log("Someone is breaking into the house, alarm!"),
-    forwardSignal(alarm, "Someone is breaking into the house, alarm!");
+    log("KTOś WŁAMUJE SIE DO BUDYNKU!"),
+    forwardSignal(alarm, "KTOś WŁAMUJE SIE DO BUDYNKU!");
 hanleIntrusion(_) -> nil.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Function: alarm/1
-%% Purpose: Reacts on smoke sensor state. 
-%% If sensor was activated fire sprinkler is being turned on. 
-%% Arguments: Smoke sensor state.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HANDLESMOKE
+% Reaguje na czujnik dymu
+
 handleSmoke(yes) ->
-    log("The sensor has detected smoke!"),
-    forwardSignal(alarm, "The sensor has detected smoke!"),
-    log("Fire sprinkler is being turned on..."),
+    log("Czujnik wykrył dym!"),
+    forwardSignal(alarm, "Czujnik wykrył dym!"),
+    log("Włączanie zraszacza..."),
     forwardSignal(sprinkler, on);
 handleSmoke(_) ->
     forwardSignal(sprinkler, off).
 
+% LOG
+% Zapisuje dane do logów
 
 log(Line) -> 
     io:format("~s~n", [Line]),
