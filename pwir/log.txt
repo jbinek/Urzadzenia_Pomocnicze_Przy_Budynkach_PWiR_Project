@@ -1,0 +1,51 @@
+[{{2020,1,11},{20,56,33}}] Air Conditioning ON, temperature : 39
+[{{2020,1,11},{20,56,36}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{20,56,38}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{20,56,40}}] The sensor has detected smoke!
+[{{2020,1,11},{20,56,40}}] Fire sprinkler is being turned on...
+[{{2020,1,11},{20,56,43}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{20,56,46}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{20,56,48}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{20,56,50}}] The sensor has detected smoke!
+[{{2020,1,11},{20,56,50}}] Fire sprinkler is being turned on...
+[{{2020,1,11},{20,56,53}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{20,56,56}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{20,56,58}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{20,57,0}}] The sensor has detected smoke!
+[{{2020,1,11},{20,57,0}}] Fire sprinkler is being turned on...
+[{{2020,1,11},{20,57,3}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{20,58,5}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{20,58,12}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{20,58,15}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{20,58,17}}] Air Conditioning ON, temperature : 38
+[{{2020,1,11},{20,58,22}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{20,58,25}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{20,58,27}}] Air Conditioning ON, temperature : 35
+[{{2020,1,11},{21,6,6}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{21,6,13}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{21,6,16}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{21,6,18}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{21,6,20}}] The sensor has detected smoke!
+[{{2020,1,11},{21,6,20}}] Fire sprinkler is being turned on...
+[{{2020,1,11},{21,6,23}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{21,6,26}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{21,6,28}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{21,6,30}}] The sensor has detected smoke!
+[{{2020,1,11},{21,6,30}}] Fire sprinkler is being turned on...
+[{{2020,1,11},{21,6,33}}] Air Conditioning ON, temperature : 39
+[{{2020,1,11},{21,7,45}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{21,7,49}}] The sensor has detected smoke!
+[{{2020,1,11},{21,7,49}}] Fire sprinkler is being turned on...
+[{{2020,1,11},{21,7,52}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{21,7,55}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{21,7,57}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{21,8,2}}] Air Conditioning ON, temperature : 36
+[{{2020,1,11},{21,8,5}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{21,8,7}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{21,8,9}}] The sensor has detected smoke!
+[{{2020,1,11},{21,8,9}}] Fire sprinkler is being turned on...
+[{{2020,1,11},{21,8,12}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{21,8,15}}] Someone is breaking into the house, alarm!
+[{{2020,1,11},{21,8,17}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{21,8,22}}] Temperature is fine, Air Conditioning OFF
+[{{2020,1,11},{21,8,25}}] Someone is breaking into the house, alarm!
