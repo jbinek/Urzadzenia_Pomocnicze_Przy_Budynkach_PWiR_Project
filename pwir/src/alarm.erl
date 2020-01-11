@@ -1,59 +1,50 @@
 -module(alarm).
 -export([start/0, stop/0]).
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% alarm simulates behavior of house's alarm.
-%% Functions: start, stop, listen
-%%%%%%%%%%%%%%%%%%%%%%
+% alarm symuluje zachowanie alarmu
 
 port() -> 8084.
 id() -> alarm.
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% Function: start
-%% Registers alarm on the server and sends data to show in the dialog box.
-%%%%%%%%%%%%%%%%%%%%%%
+% START
+% Rejestruje id alarmu w centrum kontroli na serwerze i wysyła dane do okienka w GUI
 
 start() ->
     try
-        io:format("Starting alarm with Id: ~p...~n", [id()]),
+        io:format("Alarm uruchamia się, ID = ~p...~n", [id()]),
         emitter_utils:register(controller:address(), controller:port(), id(), port()),
         Wx=wx:new(),
-        Frame=wxFrame:new(Wx, -1, "Alarm Frame"),
+        Frame=wxFrame:new(Wx, -1, "ALARM!"),
         %wxFrame:show(Frame),
         process_manager:register(id(), self()),
         listen(Frame),
         start
     catch
-        _:_ -> io:format("Single process may handle only one alarm!~n", []),
+        _:_ -> io:format("Za dużo procesów przypisanych do jednego czujnika!~n", []),
         error
     end.
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% Function: stop
-%% Stops the alarm.
-%%%%%%%%%%%%%%%%%%%%%%
+% STOP
+% Zatrzymuje alarm
 
 stop() ->
     try
         emitter_utils:unregister(controller:address(), controller:port(), id()),
-        io:format("Alarm which Id is ~p is being turned off ~n", [id()]),
+        io:format("Alarm o ID = ~p kończy pracę ~n", [id()]),
         process_manager:kill(id())
     catch
-        error:Reason -> io:format("Error while terminating ~p, alarm: ~p!~n", [self(), Reason]),
+        _:_ -> io:format("Alarm nie jest uruchomiony!~n"),
         error
     end.
 
-%%%%%%%%%%%%%%%%%%%%%%
-%% Function: listen
-%% Waits for information to show in dialog box.
-%%%%%%%%%%%%%%%%%%%%%%
+% LISTEN
+% Czeka na informację o pokazaniu okienka w GUI
 
 listen(Frame) ->
     case consumer_utils:listen(port()) of
         {_, _, Message} ->
-            io:format("Show alarm dialog: ~p ~n", [Message]),
-            D = wxMessageDialog:new (Frame, "ALARM: " ++ Message),
+            io:format("Pokazanie okienka: ~p ~n", [Message]),
+            D = wxMessageDialog:new (Frame, "ALARM!: " ++ Message),
             wxMessageDialog:showModal (D);
         _ ->
             nil
