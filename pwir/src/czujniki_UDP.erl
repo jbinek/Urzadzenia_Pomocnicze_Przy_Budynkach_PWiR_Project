@@ -1,4 +1,4 @@
--module(emitter_utils).
+-module(czujniki_UDP).
 -compile(export_all).
 % odpowiada za komunikacje między klientem a serwerem
 
