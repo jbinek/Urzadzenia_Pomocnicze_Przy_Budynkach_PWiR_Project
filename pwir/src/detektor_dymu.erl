@@ -34,7 +34,7 @@ emit() ->
         1 ->
             czujniki_UDP:sendData(centrum_kontroli:address(), centrum_kontroli:port(), id(), tak);
         _ ->
-            czujniki_UDP:sendData(centrum_kontroli:address(), centrum_kontroli:port(), id(), no)
+            czujniki_UDP:sendData(centrum_kontroli:address(), centrum_kontroli:port(), id(), nie)
     end,
     timer:sleep(timer:seconds(10)),
     emit().
