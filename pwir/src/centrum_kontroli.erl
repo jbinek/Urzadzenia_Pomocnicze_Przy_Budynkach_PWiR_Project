@@ -96,11 +96,13 @@ handleSignal(Id) ->
 % w zależności od otzymanej temepratury włacza lub wyłącza klimatyzacje
 handleTemperature(nil) -> nil;
 handleTemperature(Data) when Data > 28 ->
-    log("Klimatyzacja wlaczona, temperatura wynosi : " ++ integer_to_list(Data)),
-    forwardSignal(klima, on);
+    log("Temperatura wynosi : " ++ integer_to_list(Data)),
+    forwardSignal(klima, on),
+    forwardSignal(rolety, on);
 handleTemperature(Data) when Data =< 28  ->
-    log("Klimatyzacja wylaczona, temperatura wynosi: " ++ integer_to_list(Data)),
-    forwardSignal(klima, off).
+    log("Temperatura wynosi: " ++ integer_to_list(Data)),
+    forwardSignal(klima, off),
+    forwardSignal(rolety, off).
 
 
 % kontroler czujnika antywlamaniowego

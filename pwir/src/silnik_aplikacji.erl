@@ -29,6 +29,10 @@ start() ->
     io:format("Run [Air Conditioning] process: ~p~n", [AC_PID]),
     timer:sleep(timer:seconds(launchTimeInterval())),
 
+    ROLETY_PID = spawn(fun () -> rolety:start() end),
+    io:format("Run [rolety] process: ~p~n", [ROLETY_PID]),
+    timer:sleep(timer:seconds(launchTimeInterval())),
+
     SprinklerPID = spawn(fun () -> zraszacz_przeciwpozarowy:start() end),
     io:format("Run [Fire Sprinkler] process: ~p~n", [SprinklerPID]),
     timer:sleep(timer:seconds(launchTimeInterval())),
@@ -66,6 +70,9 @@ stop() ->
     timer:sleep(timer:seconds(stopTimeInterval())),
 
     klimatyzacja:stop(),
+    timer:sleep(timer:seconds(stopTimeInterval())),
+
+    rolety:stop(),
     timer:sleep(timer:seconds(stopTimeInterval())),
 
     zraszacz_przeciwpozarowy:stop(),
