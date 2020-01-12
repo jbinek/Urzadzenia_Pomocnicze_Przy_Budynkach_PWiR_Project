@@ -44,7 +44,7 @@ nasluchuj(Frame) ->
     case klient_UDP:nasluchuj(port()) of
         {_, _, Message} ->
             io:format("Pokazanie okienka: ~p ~n", [Message]),
-            D = wxMessageDialog:new (Frame, "ALARM!: " ++ Message),
+            D = wxMessageDialog:new (Frame, "ZAGROZENIE: " ++ Message),
             wxMessageDialog:showModal (D);
         _ ->
             nil

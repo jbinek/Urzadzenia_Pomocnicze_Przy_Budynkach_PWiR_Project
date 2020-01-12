@@ -101,14 +101,20 @@ stop() ->
 gui() ->
     P_PID = self(),
     Wx=wx:new(),
-    Frame=wxFrame:new(Wx, -1, "Urzadzenia pomocnicze przy budynkach GUI"),
-    Panel = wxPanel:new(Frame),
-    StartButton = wxButton:new(Panel, 12, [{label,"URUCHOM"}, {pos, {50, 50}}]),
+    Frame=wxFrame:new(Wx, -1, "Urządzenia pomocnicze przy budynkach",[{size,{400, 200}}]),
+    wxFrame:setBackgroundColour(Frame,{218,165,32}),
+    Panel = wxPanel:new(Frame, [{size, {10, 0}}]),
+
+    StartButton = wxButton:new(Panel, 12, [{label,"URUCHOM"}, {pos, {50, 50}}, {size, {100,100}}]),
     wxButton:connect(StartButton, command_button_clicked, [{callback,
         fun(_, _) -> P_PID ! start end }]),
-    StopButton = wxButton:new(Panel, 12, [{label,"STOP"}, {pos, {210, 50}}]),
+    wxButton:setBackgroundColour(StartButton,{240,230,140}),
+
+    StopButton = wxButton:new(Panel, 12, [{label,"ZATRZYMAJ"}, {pos, {210, 50}}, {size, {100,100}}]),
     wxButton:connect(StopButton, command_button_clicked, [{callback,
         fun(_, _) -> P_PID ! stop end }]),
+   % wxButton:setBackgroundColour(StopButton,{240,230,141}),
+
     wxFrame:show(Frame),
 
     awaitStart().
