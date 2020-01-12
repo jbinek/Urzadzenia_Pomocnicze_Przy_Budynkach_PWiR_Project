@@ -16,7 +16,7 @@ start() ->
         io:format("Klimatyzacja uruchamia sie, ID = ~p...~n", [id()]),
         czujniki_UDP:register(centrum_kontroli:address(), centrum_kontroli:port(), id(), port()),
         kontroler_pid:register(id(), self()),
-        listen(),
+        nasluchuj(),
         start
     catch
         _:_ -> io:format("Za duzo procesow przypisanych do jednego czujnika!~n", []),
@@ -36,11 +36,11 @@ stop() ->
         error
     end.
 
-% LISTEN
+% NASLUCHUJ
 % Czeka na informację o włączeniu lub wyłączeniu klimatyzacji
 
-listen() ->
-    case klient_UDP:listen(port()) of
+nasluchuj() ->
+    case klient_UDP:nasluchuj(port()) of
         {_, _, on} ->
             io:format("Klimatyzacja wlacza sie ~n");
         {_, _, off} ->
@@ -48,4 +48,4 @@ listen() ->
         _ ->
             nil
     end,
-    listen().
+    nasluchuj().
