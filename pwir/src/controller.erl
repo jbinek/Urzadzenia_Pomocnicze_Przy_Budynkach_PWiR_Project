@@ -1,21 +1,18 @@
 -module(controller).
 -export([start/0, stop/0, port/0, address/0, handleTemperature/1, handleSmoke/1, hanleIntrusion/1]).
-
-% Główny server aplikacji - wymienia dane między klientami i wywołuje funkcje w oparciu o otrzymane dane
+% serwer aplikacji, centrum kontroli
 
 port() -> 5000.
 address() -> {127,0,0,1}.
 id() -> controller.
 
-% START
-% Uruchamia server na podanym porcie i tworzy potrzebne kontrolery danych
-
+%uruchamia serwer na porcie 5000
 start() ->
     try
         ets:new(clientSet, [set, named_table, public]),
         ets:new(dataSet, [set, named_table, public]),
         ets:new(signalHandlers, [bag, named_table, public]),
-        io:format("Serwer na porcie ~p uruchamia się...~n", [port()]),
+        io:format("Uruchomienie serwera na porcie ~p ~n", [port()]),
 
         ets:insert(signalHandlers, {temp, fun handleTemperature/1}),
         ets:insert(signalHandlers, {smoke, fun handleSmoke/1}),
@@ -25,28 +22,24 @@ start() ->
         listen(),
         start
     catch
-        A:B -> io:format("Error podczas uruchamiania procesu: ~p, ~p~n", [A, B]),
-        error
+        A:B -> io:format("Nie mozna uruchomic centrum kontorli: ~p, ~p~n", [A, B]),
+            error
     end.
 
-% STOP
-% Zatrzymuje serwer i usuwa wszystkie istniejące kontenery danych
-
+% usuwa serwer z danego portu
 stop() ->
     try
         ets:delete(clientSet),
         ets:delete(dataSet),
         ets:delete(signalHandlers),
-        io:format("Server stopped!~n"),
+        io:format("Koniec pracy serwera!~n"),
         process_manager:kill(id())
     catch
-        _:_ -> io:format("No working server on port ~p!~n", [port()]),
-        error
+        _:_ -> io:format("Brak serwera na tym porcie ~p!~n", [port()]),
+            error
     end.
 
-% LISTEN
-% Nasłuchuje i wywołuje asynchronicznie funkcje
-
+% zczytuje dane z serwera a następnie wykonuje odpowiednie operacje w sposob asynchroniczny
 listen() ->
     case consumer_utils:listen(port()) of
         {error, _} ->
@@ -58,37 +51,32 @@ listen() ->
             stop()
     end.
 
-% ACT
-% Reaguje na otrzymane dane
-
+% w zaleznosci od typu danych wykonuje odpowiednie akcje
 act(ClientAddress, {register, Id, ClientPort}) ->
+    io:format("Rejestracja ID - ~p.~n", [Id]),
     ets:insert(clientSet, {Id, ClientAddress, ClientPort}),
-    io:format("Rejestracja klient o ID = ~p~n", [Id]);
+    io:format("Rejestracja klienta o ID - ~p~n", [Id]);
 act(_, {data, Id, Data}) ->
     ets:insert(dataSet, {Id, Data}),
-    io:format("Otrzymano dane od klienta o ID = ~p: ~p~n", [Id, Data]),
+    io:format("Otrzymywanie danych z ID - ~p: ~p~n", [Id, Data]),
     handleSignal(Id);
 act(_, {delete, Id}) ->
     try
         ets:delete(clientSet, Id),
-        io:format("Zatrzymywanie klienta o ID = ~p.~n", [Id])
+        io:format("Usuwanie klienta o ID -  ~p.~n", [Id])
     catch
-        error:badarg -> io:format("Brak klienta o ID = ~p!~n", [Id])
+        error:badarg -> io:format("Nie istanieje klient o ID - ~p!~n", [Id])
     end.
 
 
-% RETRIEVEDATA
-% Zwraca dane od klienta
-
+% zwraca dane pochodzace od klienta o danym ID
 retrieveData(Id) ->
     case ets:lookup(dataSet, Id) of
         [] -> nil;
         [{Id, Data}] -> Data
     end.
 
-% FORWARDSIGNAL
-% Wysyła dane do klienta
-
+% wysyła dane do klienta o danym ID
 forwardSignal(Id, Data) ->
     case ets:lookup(clientSet, Id) of
         [] -> nil;
@@ -96,51 +84,42 @@ forwardSignal(Id, Data) ->
             emitter_utils:send(ClientAddress, ClientPort, Data)
     end.
 
-% HANDLESIGNAL
-% Wywołuje funkcje w zależności od otrzymanych danych
-
+% kontroler funkcji biorących udział w przyjmowaniu danych
 handleSignal(Id) ->
     case ets:lookup(signalHandlers, Id) of
         [] -> nil;
         Funcs ->
-                lists:map(fun ({_, Func}) -> Func(retrieveData(Id)) end, Funcs)
+            lists:map(fun ({_, Func}) -> Func(retrieveData(Id)) end, Funcs)
     end.
 
 
-% HANDLETEMPERATURE
-% Reaguje na temperaturę
+% w zależności od otzymanej temepratury włacza lub wyłącza klimatyzacje
 handleTemperature(nil) -> nil;
 handleTemperature(Data) when Data > 28 ->
-    log("Klimatyzacja WŁĄCZONA, temperatura: " ++ integer_to_list(Data)),
+    log("Klimatyzacja wlaczona, temperatura wynosi : " ++ integer_to_list(Data)),
     forwardSignal(ac, on);
-handleTemperature(_)  ->
-    log("Temperatura w porządku, wyłączanie klimatyzacji"),
+handleTemperature(Data) when Data =< 28  ->
+    log("Klimatyzacja wylaczona, temperatura wynosi: " ++ integer_to_list(Data)),
     forwardSignal(ac, off).
 
 
-% HANDLEINTRUSION
-% Reaguje na czujnik antywłamaniony
-
+% kontroler czujnika antywlamaniowego
 hanleIntrusion(yes) ->
-    log("KTOś WŁAMUJE SIE DO BUDYNKU!"),
-    forwardSignal(alarm, "KTOś WŁAMUJE SIE DO BUDYNKU!");
+    log("Ktos wlamal sie do budynku!"),
+    forwardSignal(alarm, "Ktos wlamal sie do budynku!");
 hanleIntrusion(_) -> nil.
 
-% HANDLESMOKE
-% Reaguje na czujnik dymu
-
+% kontroler detektora dymu
 handleSmoke(yes) ->
-    log("Czujnik wykrył dym!"),
-    forwardSignal(alarm, "Czujnik wykrył dym!"),
-    log("Włączanie zraszacza..."),
+    log("Detektor zidentyfikowal dym!"),
+    forwardSignal(alarm, "Detektor zidentyfikowal dym!"),
+    log("Uruchamianie zraszacza przeciwpozarowego!"),
     forwardSignal(sprinkler, on);
 handleSmoke(_) ->
     forwardSignal(sprinkler, off).
 
-% LOG
-% Zapisuje dane do logów
-
-log(Line) -> 
+% zapisuje logi do pliku tekstowego
+log(Line) ->
     io:format("~s~n", [Line]),
     {ok, Log} = file:open("log.txt", [append]),
     io:format(Log, "[~p] ~s~n", [erlang:localtime(), Line]),

@@ -86,7 +86,7 @@ gui() ->
     StartButton = wxButton:new(Panel, 12, [{label,"URUCHOM"}, {pos, {50, 50}}]),
     wxButton:connect(StartButton, command_button_clicked, [{callback,
         fun(_, _) -> P_PID ! start end }]),
-    StopButton = wxButton:new(Panel, 12, [{label,"STOP"}, {pos, {50, 50}}]),
+    StopButton = wxButton:new(Panel, 12, [{label,"STOP"}, {pos, {210, 50}}]),
     wxButton:connect(StopButton, command_button_clicked, [{callback,
         fun(_, _) -> P_PID ! stop end }]),
     wxFrame:show(Frame),
