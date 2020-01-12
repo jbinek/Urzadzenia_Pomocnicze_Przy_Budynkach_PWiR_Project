@@ -3,30 +3,39 @@
   <component name="ChangeListManager">
     <list default="true" id="4eff724b-9927-409e-8aa2-b49a95f6edcc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pwir/air_conditioning.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pwir/air_conditioning.beam" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pwir/air_conditioning.beam" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/pwir/alarm.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pwir/alarm.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pwir/anti_intrusion_sensor.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pwir/anti_intrusion_sensor.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pwir/consumer_utils.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pwir/consumer_utils.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pwir/controller.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pwir/controller.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pwir/emitter_utils.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pwir/emitter_utils.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pwir/fire_sprinkler.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pwir/fire_sprinkler.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pwir/process_manager.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pwir/process_manager.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pwir/runner.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pwir/runner.beam" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pwir/anti_intrusion_sensor.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pwir/consumer_utils.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pwir/controller.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pwir/emitter_utils.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pwir/fire_sprinkler.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pwir/process_manager.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pwir/runner.beam" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/pwir/smoke_sensor.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pwir/smoke_sensor.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pwir/temperature_sensor.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pwir/temperature_sensor.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/pwir/air_conditioning.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/pwir/air_conditioning.beam" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pwir/temperature_sensor.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/pwir/air_conditioning.beam" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/test/pwir/alarm.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/pwir/alarm.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/pwir/anti_intrusion_sensor.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/pwir/anti_intrusion_sensor.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/pwir/consumer_utils.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/pwir/consumer_utils.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/pwir/controller.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/pwir/controller.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/pwir/emitter_utils.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/pwir/emitter_utils.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/pwir/fire_sprinkler.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/pwir/fire_sprinkler.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/pwir/process_manager.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/pwir/process_manager.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/pwir/runner.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/pwir/runner.beam" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/pwir/anti_intrusion_sensor.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/pwir/consumer_utils.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/pwir/controller.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/pwir/emitter_utils.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/pwir/fire_sprinkler.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/pwir/process_manager.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/pwir/runner.beam" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/test/pwir/smoke_sensor.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/pwir/smoke_sensor.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/pwir/temperature_sensor.beam" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/pwir/temperature_sensor.beam" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller.erl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/runner.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/runner.erl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/pwir/temperature_sensor.beam" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/air_conditioning.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/klimatyzacja.erl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/alarm.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/alarm.erl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/anti_intrusion_sensor.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/czujnik_antywlamaniowy.erl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/consumer_utils.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/klient_UDP.erl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/centrum_kontroli.erl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/emitter_utils.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/czujniki_UDP.erl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fire_sprinkler.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/zraszacz_przeciwpozarowy.erl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/process_manager.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/kontroler_pid.erl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/runner.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/silnik_aplikacji.erl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/smoke_sensor.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/smoke_sensor.erl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/temperature_sensor.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/miernik_temperatury.erl" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,74 +53,73 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/temperature_sensor.erl">
+        <entry file="file://$PROJECT_DIR$/src/miernik_temperatury.erl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+            <state relative-caret-position="102">
+              <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/centrum_kontroli.erl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1783">
+              <caret line="6" column="9" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/klient_UDP.erl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="155">
+              <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/controller.erl">
+        <entry file="file://$PROJECT_DIR$/src/zraszacz_przeciwpozarowy.erl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="100" column="39" selection-start-line="100" selection-start-column="39" selection-end-line="100" selection-end-column="39" />
+            <state relative-caret-position="155">
+              <caret line="39" column="52" selection-start-line="39" selection-start-column="52" selection-end-line="39" selection-end-column="52" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/fire_sprinkler.erl">
+        <entry file="file://$PROJECT_DIR$/src/silnik_aplikacji.erl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="33">
-              <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+            <state relative-caret-position="-168">
+              <caret line="83" column="35" selection-start-line="83" selection-start-column="35" selection-end-line="83" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/consumer_utils.erl">
+        <entry file="file://$PROJECT_DIR$/src/czujniki_UDP.erl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="39" selection-start-line="39" selection-end-line="39" />
+            <state relative-caret-position="240">
+              <caret line="27" selection-start-line="27" selection-end-line="27" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/runner.erl">
+        <entry file="file://$PROJECT_DIR$/src/klimatyzacja.erl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1496">
-              <caret line="88" column="67" selection-start-line="88" selection-start-column="67" selection-end-line="88" selection-end-column="67" />
+            <state relative-caret-position="155">
+              <caret line="46" column="47" selection-start-line="46" selection-start-column="47" selection-end-line="46" selection-end-column="47" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+        <entry file="file://$PROJECT_DIR$/src/kontroler_pid.erl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5321">
-              <caret line="389" column="10" selection-start-line="389" selection-start-column="10" selection-end-line="389" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/alarm.erl">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/air_conditioning.erl">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/anti_intrusion_sensor.erl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+            <state relative-caret-position="155">
+              <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -119,13 +127,28 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/smoke_sensor.erl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="13" />
+            <state relative-caret-position="-49">
+              <caret line="23" column="55" selection-start-line="23" selection-start-column="55" selection-end-line="23" selection-end-column="55" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/czujnik_antywlamaniowy.erl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-32">
+              <caret line="31" column="40" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>centrum_kontroli</find>
+      <find>con</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -134,14 +157,30 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/erlang.mk" />
-        <option value="$PROJECT_DIR$/src/anti_intrusion_sensor.erl" />
         <option value="$PROJECT_DIR$/src/runner.erl" />
-        <option value="$PROJECT_DIR$/src/smoke_sensor.erl" />
         <option value="$PROJECT_DIR$/src/temperature_sensor.erl" />
         <option value="$PROJECT_DIR$/src/fire_sprinkler.erl" />
         <option value="$PROJECT_DIR$/src/controller.erl" />
+        <option value="$PROJECT_DIR$/src/anti_intrusion_sensor.erl" />
+        <option value="$PROJECT_DIR$/src/czujniki_UDP.erl" />
+        <option value="$PROJECT_DIR$/src/centrum_kontroli.erl" />
+        <option value="$PROJECT_DIR$/src/alarm.erl" />
+        <option value="$PROJECT_DIR$/src/czujnik_antywlamaniowy.erl" />
+        <option value="$PROJECT_DIR$/src/klient_UDP.erl" />
+        <option value="$PROJECT_DIR$/src/klimatyzacja.erl" />
+        <option value="$PROJECT_DIR$/src/kontroler_pid.erl" />
+        <option value="$PROJECT_DIR$/src/miernik_temperatury.erl" />
+        <option value="$PROJECT_DIR$/src/silnik_aplikacji.erl" />
+        <option value="$PROJECT_DIR$/src/smoke_sensor.erl" />
+        <option value="$PROJECT_DIR$/src/zraszacz_przeciwpozarowy.erl" />
       </list>
     </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-12" />
@@ -234,13 +273,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6785000" />
+    <option name="totallyTimeSpent" value="7967000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2582996" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2582996" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -248,22 +287,22 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25399646" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3285968" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.348135" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3285968" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.22202487" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3285968" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.24939272" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Maven" order="3" weight="0.32955465" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="make" order="6" />
@@ -286,67 +325,16 @@
       </list>
     </option>
   </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/erlang.mk" />
-    <entry file="file://$PROJECT_DIR$/src/emitter_utils.erl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/air_conditioning.erl">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/alarm.erl">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/anti_intrusion_sensor.erl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5321">
-          <caret line="389" column="10" selection-start-line="389" selection-start-column="10" selection-end-line="389" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/process_manager.erl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/smoke_sensor.erl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/temperature_sensor.erl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/runner.erl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1496">
-          <caret line="88" column="67" selection-start-line="88" selection-start-column="67" selection-end-line="88" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/fire_sprinkler.erl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+          <caret line="417" column="10" selection-start-line="417" selection-start-column="10" selection-end-line="417" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -357,17 +345,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/consumer_utils.erl">
+    <entry file="file://$PROJECT_DIR$/src/alarm.erl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
+        <state relative-caret-position="-100">
+          <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller.erl">
+    <entry file="file://$PROJECT_DIR$/src/centrum_kontroli.erl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="100" column="39" selection-start-line="100" selection-start-column="39" selection-end-line="100" selection-end-column="39" />
+        <state relative-caret-position="-1783">
+          <caret line="6" column="9" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/czujnik_antywlamaniowy.erl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-32">
+          <caret line="31" column="40" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/czujniki_UDP.erl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/klient_UDP.erl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/klimatyzacja.erl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="46" column="47" selection-start-line="46" selection-start-column="47" selection-end-line="46" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/kontroler_pid.erl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/miernik_temperatury.erl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/silnik_aplikacji.erl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-168">
+          <caret line="83" column="35" selection-start-line="83" selection-start-column="35" selection-end-line="83" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/smoke_sensor.erl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-49">
+          <caret line="23" column="55" selection-start-line="23" selection-start-column="55" selection-end-line="23" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/zraszacz_przeciwpozarowy.erl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="39" column="52" selection-start-line="39" selection-start-column="52" selection-end-line="39" selection-end-column="52" />
         </state>
       </provider>
     </entry>

@@ -1,4 +1,4 @@
--module(consumer_utils).
+-module(klient_UDP).
 -export([listen/1]).
 
 % Funkcje pomocne przy komunikacji protokołem UDP
@@ -32,7 +32,7 @@ listenSocket(Socket, Timeout) ->
         {ok, {Address, Port, Packet}} ->
             Return = {Address, Port, binary_to_term(Packet)};
         {error, Reason} ->
-            io:format("Error while listening to ~p: ~p~n", [Socket, Reason]),
+            io:format("Blad z podanym gniazdem: ~p: ~p~n", [Socket, Reason]),
             Return = {error, Reason}
     end,
     gen_tcp:close(Socket),

@@ -1,10 +1,10 @@
--module(controller).
+-module(centrum_kontroli).
 -export([start/0, stop/0, port/0, address/0, handleTemperature/1, handleSmoke/1, hanleIntrusion/1]).
 % serwer aplikacji, centrum kontroli
 
 port() -> 5000.
 address() -> {127,0,0,1}.
-id() -> controller.
+id() -> centrum_kontroli.
 
 %uruchamia serwer na porcie 5000
 start() ->
@@ -14,11 +14,11 @@ start() ->
         ets:new(signalHandlers, [bag, named_table, public]),
         io:format("Uruchomienie serwera na porcie ~p ~n", [port()]),
 
-        ets:insert(signalHandlers, {temp, fun handleTemperature/1}),
-        ets:insert(signalHandlers, {smoke, fun handleSmoke/1}),
-        ets:insert(signalHandlers, {intrusion, fun hanleIntrusion/1}),
+        ets:insert(signalHandlers, {miernik_temp, fun handleTemperature/1}),
+        ets:insert(signalHandlers, {detektor, fun handleSmoke/1}),
+        ets:insert(signalHandlers, {czujnik_antywlam, fun hanleIntrusion/1}),
 
-        process_manager:register(id(), self()),
+        kontroler_pid:register(id(), self()),
         listen(),
         start
     catch
@@ -33,7 +33,7 @@ stop() ->
         ets:delete(dataSet),
         ets:delete(signalHandlers),
         io:format("Koniec pracy serwera!~n"),
-        process_manager:kill(id())
+        kontroler_pid:kill(id())
     catch
         _:_ -> io:format("Brak serwera na tym porcie ~p!~n", [port()]),
             error
@@ -41,7 +41,7 @@ stop() ->
 
 % zczytuje dane z serwera a następnie wykonuje odpowiednie operacje w sposob asynchroniczny
 listen() ->
-    case consumer_utils:listen(port()) of
+    case klient_UDP:listen(port()) of
         {error, _} ->
             stop();
         {ClientAddress, _, Data} ->
@@ -81,7 +81,7 @@ forwardSignal(Id, Data) ->
     case ets:lookup(clientSet, Id) of
         [] -> nil;
         [{Id, ClientAddress, ClientPort}] ->
-            emitter_utils:send(ClientAddress, ClientPort, Data)
+            czujniki_UDP:send(ClientAddress, ClientPort, Data)
     end.
 
 % kontroler funkcji biorących udział w przyjmowaniu danych
@@ -97,26 +97,26 @@ handleSignal(Id) ->
 handleTemperature(nil) -> nil;
 handleTemperature(Data) when Data > 28 ->
     log("Klimatyzacja wlaczona, temperatura wynosi : " ++ integer_to_list(Data)),
-    forwardSignal(ac, on);
+    forwardSignal(klima, on);
 handleTemperature(Data) when Data =< 28  ->
     log("Klimatyzacja wylaczona, temperatura wynosi: " ++ integer_to_list(Data)),
-    forwardSignal(ac, off).
+    forwardSignal(klima, off).
 
 
 % kontroler czujnika antywlamaniowego
-hanleIntrusion(yes) ->
+hanleIntrusion(tak) ->
     log("Ktos wlamal sie do budynku!"),
     forwardSignal(alarm, "Ktos wlamal sie do budynku!");
 hanleIntrusion(_) -> nil.
 
 % kontroler detektora dymu
-handleSmoke(yes) ->
+handleSmoke(tak) ->
     log("Detektor zidentyfikowal dym!"),
     forwardSignal(alarm, "Detektor zidentyfikowal dym!"),
     log("Uruchamianie zraszacza przeciwpozarowego!"),
-    forwardSignal(sprinkler, on);
+    forwardSignal(zraszacz, on);
 handleSmoke(_) ->
-    forwardSignal(sprinkler, off).
+    forwardSignal(zraszacz, off).
 
 % zapisuje logi do pliku tekstowego
 log(Line) ->

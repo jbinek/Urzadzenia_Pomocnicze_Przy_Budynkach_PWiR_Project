@@ -1,4 +1,4 @@
--module(process_manager).
+-module(kontroler_pid).
 -export([register/2, kill/1, init/0, destroy/0]).
 
 % przechowuje PIDy
@@ -14,7 +14,7 @@ register(Key, PID) -> ets:insert(pids, {Key, PID}).
 % ubija dany proces po kluczu
 kill(Key) ->
     PID = element(2, hd(ets:lookup(pids, Key))),
-    io:format("Process Manager: ~p is about to kill -> ~p (~p)~n", [self(), PID, Key]),
+    io:format("Kontroler PID: ~p usuwa ~p (~p)~n", [self(), PID, Key]),
     exit(PID, stop).
 
 % usuwa cały kontener z PIDami

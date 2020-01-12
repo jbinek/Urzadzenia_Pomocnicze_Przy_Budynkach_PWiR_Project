@@ -11,16 +11,16 @@ id() -> alarm.
 
 start() ->
     try
-        io:format("Alarm uruchamia się, ID = ~p...~n", [id()]),
-        emitter_utils:register(controller:address(), controller:port(), id(), port()),
+        io:format("Alarm uruchamia sie, ID = ~p...~n", [id()]),
+        czujniki_UDP:register(centrum_kontroli:address(), centrum_kontroli:port(), id(), port()),
         Wx=wx:new(),
         Frame=wxFrame:new(Wx, -1, "ALARM!"),
         %wxFrame:show(Frame),
-        process_manager:register(id(), self()),
+        kontroler_pid:register(id(), self()),
         listen(Frame),
         start
     catch
-        _:_ -> io:format("Za dużo procesów przypisanych do jednego czujnika!~n", []),
+        _:_ -> io:format("Za duzo procesow przypisanych do jednego czujnika!~n", []),
         error
     end.
 
@@ -29,9 +29,9 @@ start() ->
 
 stop() ->
     try
-        emitter_utils:unregister(controller:address(), controller:port(), id()),
-        io:format("Alarm o ID = ~p kończy pracę ~n", [id()]),
-        process_manager:kill(id())
+        czujniki_UDP:unregister(centrum_kontroli:address(), centrum_kontroli:port(), id()),
+        io:format("Alarm o ID = ~p konczy prace ~n", [id()]),
+        kontroler_pid:kill(id())
     catch
         _:_ -> io:format("Alarm nie jest uruchomiony!~n"),
         error
@@ -41,7 +41,7 @@ stop() ->
 % Czeka na informację o pokazaniu okienka w GUI
 
 listen(Frame) ->
-    case consumer_utils:listen(port()) of
+    case klient_UDP:listen(port()) of
         {_, _, Message} ->
             io:format("Pokazanie okienka: ~p ~n", [Message]),
             D = wxMessageDialog:new (Frame, "ALARM!: " ++ Message),
