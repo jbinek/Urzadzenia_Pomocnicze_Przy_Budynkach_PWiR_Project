@@ -17,7 +17,7 @@ start() ->
         Frame=wxFrame:new(Wx, -1, "ALARM!"),
         %wxFrame:show(Frame),
         kontroler_pid:register(id(), self()),
-        listen(Frame),
+        nasluchuj(Frame),
         start
     catch
         _:_ -> io:format("Za duzo procesow przypisanych do jednego czujnika!~n", []),
@@ -37,11 +37,11 @@ stop() ->
         error
     end.
 
-% LISTEN
+% NASLUCHUJ
 % Czeka na informację o pokazaniu okienka w GUI
 
-listen(Frame) ->
-    case klient_UDP:listen(port()) of
+nasluchuj(Frame) ->
+    case klient_UDP:nasluchuj(port()) of
         {_, _, Message} ->
             io:format("Pokazanie okienka: ~p ~n", [Message]),
             D = wxMessageDialog:new (Frame, "ZAGROZENIE: " ++ Message),
@@ -49,4 +49,4 @@ listen(Frame) ->
         _ ->
             nil
     end,
-    listen(Frame).
+    nasluchuj(Frame).

@@ -3,84 +3,97 @@
 
 % silnik aplikacji
 
-launchTimeInterval() -> 2.
-stopTimeInterval() -> 1.
+czasUruchomienia() -> 2.
+czasZatrzymania() -> 1.
 
-% towrzy wszyztkie potrzebne zasoby i uruchamia aplikację
+% tworzy wszystkie potrzebne zasoby i uruchamia aplikację
+
 start() ->
-
-
-
     kontroler_pid:init(),
 
-
     %centrum kontroli
-    ControllerPID = spawn(fun () -> centrum_kontroli:start() end),
-    io:format("Run [controller] process: ~p~n", [ControllerPID]),
-    timer:sleep(timer:seconds(launchTimeInterval())),
+    CentrumPID = spawn(fun () -> centrum_kontroli:start() end),
+    io:format("Run process [Centrum Kontroli]: ~p~n", [CentrumPID]),
+    timer:sleep(timer:seconds(czasUruchomienia())),
 
 
     %klienci
     AlarmPID = spawn(fun () -> alarm:start() end),
-    io:format("Run [Alarm] process: ~p~n", [AlarmPID]),
-    timer:sleep(timer:seconds(launchTimeInterval())),
+    io:format("Run process [Alarm]: ~p~n", [AlarmPID]),
+    timer:sleep(timer:seconds(czasUruchomienia())),
 
-    AC_PID = spawn(fun () -> klimatyzacja:start() end),
-    io:format("Run [Air Conditioning] process: ~p~n", [AC_PID]),
-    timer:sleep(timer:seconds(launchTimeInterval())),
+    KlimaPID = spawn(fun () -> klimatyzacja:start() end),
+    io:format("Run process [Klimatyzacja]: ~p~n", [KlimaPID]),
+    timer:sleep(timer:seconds(czasUruchomienia())),
 
-    ROLETY_PID = spawn(fun () -> rolety:start() end),
-    io:format("Run [rolety] process: ~p~n", [ROLETY_PID]),
-    timer:sleep(timer:seconds(launchTimeInterval())),
+    RoletyPID = spawn(fun () -> rolety:start() end),
+    io:format("Run process [Rolety]: ~p~n", [RoletyPID]),
+    timer:sleep(timer:seconds(czasUruchomienia())),
 
-    SprinklerPID = spawn(fun () -> zraszacz_przeciwpozarowy:start() end),
-    io:format("Run [Fire Sprinkler] process: ~p~n", [SprinklerPID]),
-    timer:sleep(timer:seconds(launchTimeInterval())),
+    DrzwiPID = spawn(fun () -> drzwi:start() end),
+    io:format("Run process [Drzwi]: ~p~n", [DrzwiPID]),
+    timer:sleep(timer:seconds(czasUruchomienia())),
+
+    ZraszaczPID = spawn(fun () -> zraszacz_przeciwpozarowy:start() end),
+    io:format("Run process [Zraszacz przeciwpozarowy]: ~p~n", [ZraszaczPID]),
+    timer:sleep(timer:seconds(czasUruchomienia())),
 
 
 
 
     %urzadzenia
-    AI_PID = spawn(fun () -> czujnik_antywlamaniowy:start() end),
-    io:format("Run [Anti Intrusion Sensor] process: ~p~n", [AI_PID]),
-    timer:sleep(timer:seconds(launchTimeInterval())),
+    AntywlamPID = spawn(fun () -> czujnik_antywlamaniowy:start() end),
+    io:format("Run process [Czujnik antywlamaniowy]: ~p~n", [AntywlamPID]),
+    timer:sleep(timer:seconds(czasUruchomienia())),
 
     TempPID = spawn(fun () -> miernik_temperatury:start() end),
-    io:format("Run [Temperature Sensor] process: ~p~n", [TempPID]),
-    timer:sleep(timer:seconds(launchTimeInterval())),
+    io:format("Run process [Miernik temperatury]: ~p~n", [TempPID]),
+    timer:sleep(timer:seconds(czasUruchomienia())),
 
-    SmokePID = spawn(fun () -> detektor_dymu:start() end),
-    io:format("Run [Smoke Sensor] process: ~p~n", [SmokePID]).
+    KontrolDrzwiPID = spawn(fun () -> kontroler_drzwi:start() end),
+    io:format("Run process [Kontroler drzwi]: ~p~n", [KontrolDrzwiPID]),
+    timer:sleep(timer:seconds(czasUruchomienia())),
+
+    DymPID = spawn(fun () -> detektor_dymu:start() end),
+    io:format("Run process [Czujnik dymu]: ~p~n", [DymPID]).
 
 %zatrzymuje działanie aplikacji
 stop() ->
 
     %urządzenia
     detektor_dymu:stop(),
-    timer:sleep(timer:seconds(stopTimeInterval())),
+    timer:sleep(timer:seconds(czasZatrzymania())),
 
     miernik_temperatury:stop(),
-    timer:sleep(timer:seconds(stopTimeInterval())),
+    timer:sleep(timer:seconds(czasZatrzymania())),
 
     czujnik_antywlamaniowy:stop(),
-    timer:sleep(timer:seconds(stopTimeInterval())),
+    timer:sleep(timer:seconds(czasZatrzymania())),
 
-    %klienci
+    kontroler_drzwi:stop(),
+    timer:sleep(timer:seconds(czasZatrzymania())),
+
+
+  %klienci
     alarm:stop(),
-    timer:sleep(timer:seconds(stopTimeInterval())),
+    timer:sleep(timer:seconds(czasZatrzymania())),
 
     klimatyzacja:stop(),
-    timer:sleep(timer:seconds(stopTimeInterval())),
+    timer:sleep(timer:seconds(czasZatrzymania())),
 
     rolety:stop(),
-    timer:sleep(timer:seconds(stopTimeInterval())),
+    timer:sleep(timer:seconds(czasZatrzymania())),
+
+    drzwi:stop(),
+    timer:sleep(timer:seconds(czasZatrzymania())),
 
     zraszacz_przeciwpozarowy:stop(),
-    timer:sleep(timer:seconds(stopTimeInterval())),
+    timer:sleep(timer:seconds(czasZatrzymania())),
+
+
 
     %centurm kontroli
     centrum_kontroli:stop(),
-
 
     kontroler_pid:destroy().
 

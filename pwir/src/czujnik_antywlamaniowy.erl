@@ -37,11 +37,6 @@ stop() ->
 % Czujnik co 25 sekund wysyła do centrum kontroli informację o potencjalnym włamaniu
 
 emit() ->
-    case rand:uniform(1) of
-        1 ->
-            czujniki_UDP:sendData(centrum_kontroli:address(), centrum_kontroli:port(), id(), tak);
-        _ ->
-        czujniki_UDP:sendData(centrum_kontroli:address(), centrum_kontroli:port(), id(), no)
-    end,
+    czujniki_UDP:sendData(centrum_kontroli:address(), centrum_kontroli:port(), id(), rand:uniform(24)),
     timer:sleep(timer:seconds(25)),
     emit().

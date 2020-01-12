@@ -1,5 +1,5 @@
 -module(centrum_kontroli).
--export([start/0, stop/0, port/0, address/0, handleTemperature/1, handleSmoke/1, hanleIntrusion/1]).
+-export([start/0, stop/0, port/0, address/0, temperatura/1, dym/1, godzina/1, wlamanie/1]).
 % serwer aplikacji, centrum kontroli
 
 port() -> 5000.
@@ -14,12 +14,14 @@ start() ->
         ets:new(signalHandlers, [bag, named_table, public]),
         io:format("Uruchomienie serwera na porcie ~p ~n", [port()]),
 
-        ets:insert(signalHandlers, {miernik_temp, fun handleTemperature/1}),
-        ets:insert(signalHandlers, {detektor, fun handleSmoke/1}),
-        ets:insert(signalHandlers, {czujnik_antywlam, fun hanleIntrusion/1}),
+        ets:insert(signalHandlers, {miernik_temp, fun temperatura/1}),
+        ets:insert(signalHandlers, {detektor, fun dym/1}),
+        ets:insert(signalHandlers, {kontroler_drzwi, fun godzina/1}),
+        ets:insert(signalHandlers, {czujnik_antywlam, fun wlamanie/1}),
+
 
         kontroler_pid:register(id(), self()),
-        listen(),
+        nasluchuj(),
         start
     catch
         A:B -> io:format("Nie mozna uruchomic centrum kontorli: ~p, ~p~n", [A, B]),
@@ -40,27 +42,27 @@ stop() ->
     end.
 
 % zczytuje dane z serwera a następnie wykonuje odpowiednie operacje w sposob asynchroniczny
-listen() ->
-    case klient_UDP:listen(port()) of
+nasluchuj() ->
+    case klient_UDP:nasluchuj(port()) of
         {error, _} ->
             stop();
         {ClientAddress, _, Data} ->
-            spawn(fun () -> act(ClientAddress, Data) end),
-            listen();
+            spawn(fun () -> wykonaj(ClientAddress, Data) end),
+            nasluchuj();
         _ ->
             stop()
     end.
 
 % w zaleznosci od typu danych wykonuje odpowiednie akcje
-act(ClientAddress, {register, Id, ClientPort}) ->
+wykonaj(ClientAddress, {register, Id, ClientPort}) ->
     io:format("Rejestracja ID - ~p.~n", [Id]),
     ets:insert(clientSet, {Id, ClientAddress, ClientPort}),
     io:format("Rejestracja klienta o ID - ~p~n", [Id]);
-act(_, {data, Id, Data}) ->
+wykonaj(_, {data, Id, Data}) ->
     ets:insert(dataSet, {Id, Data}),
     io:format("Otrzymywanie danych z ID - ~p: ~p~n", [Id, Data]),
-    handleSignal(Id);
-act(_, {delete, Id}) ->
+    sygnal(Id);
+wykonaj(_, {delete, Id}) ->
     try
         ets:delete(clientSet, Id),
         io:format("Usuwanie klienta o ID -  ~p.~n", [Id])
@@ -77,7 +79,7 @@ retrieveData(Id) ->
     end.
 
 % wysyła dane do klienta o danym ID
-forwardSignal(Id, Data) ->
+przekazSygnal(Id, Data) ->
     case ets:lookup(clientSet, Id) of
         [] -> nil;
         [{Id, ClientAddress, ClientPort}] ->
@@ -85,7 +87,7 @@ forwardSignal(Id, Data) ->
     end.
 
 % kontroler funkcji biorących udział w przyjmowaniu danych
-handleSignal(Id) ->
+sygnal(Id) ->
     case ets:lookup(signalHandlers, Id) of
         [] -> nil;
         Funcs ->
@@ -94,31 +96,45 @@ handleSignal(Id) ->
 
 
 % w zależności od otzymanej temepratury włacza lub wyłącza klimatyzacje
-handleTemperature(nil) -> nil;
-handleTemperature(Data) when Data > 28 ->
+temperatura(nil) -> nil;
+temperatura(Data) when Data > 28 ->
     log("Temperatura wynosi : " ++ integer_to_list(Data)),
-    forwardSignal(klima, on),
-    forwardSignal(rolety, on);
-handleTemperature(Data) when Data =< 28  ->
+    przekazSygnal(klima, on),
+    przekazSygnal(rolety, on);
+temperatura(Data) when Data =< 28  ->
     log("Temperatura wynosi: " ++ integer_to_list(Data)),
-    forwardSignal(klima, off),
-    forwardSignal(rolety, off).
+    przekazSygnal(klima, off),
+    przekazSygnal(rolety, off).
+
+
+% kontroler drzwi
+godzina(nil) -> nil;
+godzina(Data) when Data >= 7 ->
+    log("Godzina: " ++ integer_to_list(Data)),
+    przekazSygnal(drzwi, on);
+godzina(Data) when Data < 7 ->
+    log ("Godzina: " ++ integer_to_list(Data)),
+    przekazSygnal(drzwi, off).
 
 
 % kontroler czujnika antywlamaniowego
-hanleIntrusion(tak) ->
-    log("Ktos wlamal sie do budynku!"),
-    forwardSignal(alarm, "Ktos wlamal sie do budynku!");
-hanleIntrusion(_) -> nil.
+wlamanie(nil) -> nil;
+wlamanie(Data) when Data < 7 ->
+  log("Godzina: " ++ integer_to_list(Data)),
+  log("Czujnik wykryl wlamanie!"),
+  przekazSygnal(alarm, "KTOS WLAMAL SIE DO BUDYNKU");
+wlamanie(Data) when Data >= 7 ->
+  log("Godzina: " ++ integer_to_list(Data)),
+  log("Falszywy alarm antywlamaniowy!").
 
 % kontroler detektora dymu
-handleSmoke(tak) ->
+dym(tak) ->
     log("Detektor zidentyfikowal dym!"),
-    forwardSignal(alarm, "Detektor zidentyfikowal dym!"),
+    przekazSygnal(alarm, "Detektor zidentyfikowal dym!"),
     log("Uruchamianie zraszacza przeciwpozarowego!"),
-    forwardSignal(zraszacz, on);
-handleSmoke(_) ->
-    forwardSignal(zraszacz, off).
+    przekazSygnal(zraszacz, on);
+dym(_) ->
+    przekazSygnal(zraszacz, off).
 
 % zapisuje logi do pliku tekstowego
 log(Line) ->

@@ -1,15 +1,15 @@
 -module(klient_UDP).
--export([listen/1]).
+-export([nasluchuj/1]).
 
 % Funkcje pomocne przy komunikacji protokołem UDP
 
-% LISTEN
+% NASLUCHUJ
 % Nasłuchuje danych wysłanych przez UDP na podanym porcie przez konkretny czas w ms
 
-listen(Port, Timeout) ->
+nasluchuj(Port, Timeout) ->
     case gen_udp:open(Port, [binary, {active, false}]) of
         {ok, Socket} ->
-            Return = listenSocket(Socket, Timeout);
+            Return = nasluchujSocket(Socket, Timeout);
         {error, eaddrinuse} ->
             io:format("Port ~p jest używany przez inny proces!~n", [Port]),
             Return = {error, eaddrinuse};
@@ -18,16 +18,16 @@ listen(Port, Timeout) ->
     end,
     Return.
 
-% LISTEN
+% NASLUCHUJ
 % Nasłuchuje danych wysłanych przez UDP na podanym porcie przez 100000 ms
 
-listen(Port) ->
-    listen(Port, 100000).
+nasluchuj(Port) ->
+    nasluchuj(Port, 100000).
 
-% LISTENSOCKET
+% NASLUCHUJSOCKET
 % Nasłuchuje danych wysłanych przez UDP na podanym gnieździe przez konkretny czas w ms
 
-listenSocket(Socket, Timeout) ->
+nasluchujSocket(Socket, Timeout) ->
     case gen_udp:recv(Socket, 0, Timeout) of
         {ok, {Address, Port, Packet}} ->
             Return = {Address, Port, binary_to_term(Packet)};
