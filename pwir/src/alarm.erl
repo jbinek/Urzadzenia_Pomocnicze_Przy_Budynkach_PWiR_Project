@@ -14,7 +14,7 @@ start() ->
         io:format("Alarm uruchamia sie, ID = ~p...~n", [id()]),
         czujniki_UDP:register(centrum_kontroli:address(), centrum_kontroli:port(), id(), port()),
         Wx=wx:new(),
-        Frame=wxFrame:new(Wx, -1, "ALARM!"),
+        Frame=wxFrame:new(Wx, -1, "POWIADOMIENIE!"),
         %wxFrame:show(Frame),
         kontroler_pid:register(id(), self()),
         nasluchuj(Frame),
@@ -44,7 +44,7 @@ nasluchuj(Frame) ->
     case klient_UDP:nasluchuj(port()) of
         {_, _, Message} ->
             io:format("Pokazanie okienka: ~p ~n", [Message]),
-            D = wxMessageDialog:new (Frame, "ZAGROZENIE: " ++ Message),
+            D = wxMessageDialog:new (Frame, "POWIADOMIENIE: " ++ Message),
             wxMessageDialog:showModal (D);
         _ ->
             nil

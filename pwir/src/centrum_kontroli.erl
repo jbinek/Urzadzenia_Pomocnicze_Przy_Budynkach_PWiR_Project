@@ -1,5 +1,5 @@
 -module(centrum_kontroli).
--export([start/0, stop/0, port/0, address/0, temperatura/1, dym/1, godzina/1, wlamanie/1]).
+-export([start/0, stop/0, port/0, address/0, temperatura/1, dym/1, godzina/1, drzwiOtwarte/1, drzwiZamkniete/1, wlamanie/1]).
 % serwer aplikacji, centrum kontroli
 
 port() -> 5000.
@@ -99,22 +99,58 @@ sygnal(Id) ->
 temperatura(nil) -> nil;
 temperatura(Data) when Data > 28 ->
     log("Temperatura wynosi : " ++ integer_to_list(Data)),
+    przekazSygnal(alarm, "Temperatura jest za wysoka - aktywacja klimatyzacji i rolet!"),
     przekazSygnal(klima, on),
     przekazSygnal(rolety, on);
 temperatura(Data) when Data =< 28  ->
     log("Temperatura wynosi: " ++ integer_to_list(Data)),
+    przekazSygnal(alarm, "Temperatura jest optymalna - dezaktywacja klimatyzaji i rolet!"),
     przekazSygnal(klima, off),
     przekazSygnal(rolety, off).
+
+drzwiOtwarte(Data) ->
+    log("Godzina: " ++ integer_to_list(Data)),
+    przekazSygnal(alarm, "Drzwi są otwarte, godzina - " ++ integer_to_list(Data)),
+    przekazSygnal(drzwi, on).
+
+drzwiZamkniete(Data) ->
+    log ("Godzina: " ++ integer_to_list(Data)),
+    przekazSygnal(alarm, "Drzwi są zamknięte, godzina - " ++ integer_to_list(Data)),
+    przekazSygnal(drzwi, off).
 
 
 % kontroler drzwi
 godzina(nil) -> nil;
-godzina(Data) when Data >= 7 ->
-    log("Godzina: " ++ integer_to_list(Data)),
-    przekazSygnal(drzwi, on);
-godzina(Data) when Data < 7 ->
-    log ("Godzina: " ++ integer_to_list(Data)),
-    przekazSygnal(drzwi, off).
+godzina(Data) ->
+    case Data of
+        0 -> drzwiZamkniete(Data);
+        1 -> drzwiZamkniete(Data);
+        2 -> drzwiZamkniete(Data);
+        3 -> drzwiZamkniete(Data);
+        4 -> drzwiZamkniete(Data);
+        5 -> drzwiZamkniete(Data);
+        6 -> drzwiZamkniete(Data);
+        7 -> drzwiOtwarte(Data);
+        8 -> drzwiOtwarte(Data);
+        9 -> drzwiOtwarte(Data);
+        10 -> drzwiOtwarte(Data);
+        11 -> drzwiOtwarte(Data);
+        12 -> drzwiOtwarte(Data);
+        13 -> drzwiOtwarte(Data);
+        14 -> drzwiOtwarte(Data);
+        15 -> drzwiOtwarte(Data);
+        16 -> drzwiOtwarte(Data);
+        17 -> drzwiOtwarte(Data);
+        18 -> drzwiZamkniete(Data);
+        19 -> drzwiZamkniete(Data);
+        20 -> drzwiZamkniete(Data);
+        21 -> drzwiZamkniete(Data);
+        22 -> drzwiZamkniete(Data);
+        23 -> drzwiZamkniete(Data);
+        24 -> drzwiZamkniete(Data)
+    end.
+
+
 
 
 % kontroler czujnika antywlamaniowego
@@ -126,6 +162,13 @@ wlamanie(Data) when Data < 7 ->
 wlamanie(Data) when Data >= 7 ->
   log("Godzina: " ++ integer_to_list(Data)),
   log("Falszywy alarm antywlamaniowy!").
+
+% kontroler miernika temperatury
+%temperaturaPowiadomienie(nil) -> nil;
+%temperaturaPowiadomienie(Data) when Data < 28 ->
+%    przekazSygnal(alarm, "Temperatura jest za wysoka - aktywacja klimatyzacji i rolet!");
+%temperaturaPowiadomienie(Data) when Data >= 28 ->
+%    przekazSygnal(alarm, "Temperatura jest optymalna - dezaktywacja klimatyzaji i rolet!").
 
 % kontroler detektora dymu
 dym(tak) ->
