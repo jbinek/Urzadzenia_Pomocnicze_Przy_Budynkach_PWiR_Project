@@ -108,11 +108,13 @@ temperatura(Data) when Data =< 28  ->
     przekazSygnal(klima, off),
     przekazSygnal(rolety, off).
 
+% funkcja pomocnicza do kontrolera dzrwi, tworzy log z godzina i wyswietla okienko z powiadomieniem o otwartych drzwiach
 drzwiOtwarte(Data) ->
     log("Godzina: " ++ integer_to_list(Data)),
     przekazSygnal(alarm, "Drzwi są otwarte, godzina - " ++ integer_to_list(Data)),
     przekazSygnal(drzwi, on).
 
+% funkcja pomocnicza do kontrolera dzrwi, tworzy log z godzina i wyswietla okienko z powiadomieniem o zamknietych drzwiach
 drzwiZamkniete(Data) ->
     log ("Godzina: " ++ integer_to_list(Data)),
     przekazSygnal(alarm, "Drzwi są zamknięte, godzina - " ++ integer_to_list(Data)),
