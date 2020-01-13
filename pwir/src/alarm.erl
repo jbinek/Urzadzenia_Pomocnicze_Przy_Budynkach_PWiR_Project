@@ -11,10 +11,11 @@ id() -> alarm.
 
 start() ->
     try
-        io:format("Alarm uruchamia sie, ID = ~p...~n", [id()]),
+        io:format("Alarm uruchamia sie, ID = ~p ~n", [id()]),
         czujniki_UDP:register(centrum_kontroli:address(), centrum_kontroli:port(), id(), port()),
         Wx=wx:new(),
         Frame=wxFrame:new(Wx, -1, "POWIADOMIENIE!"),
+        wxFrame:setBackgroundColour(Frame, {30,144,255}),
         %wxFrame:show(Frame),
         kontroler_pid:register(id(), self()),
         nasluchuj(Frame),
