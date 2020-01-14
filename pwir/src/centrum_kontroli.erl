@@ -1,5 +1,5 @@
 -module(centrum_kontroli).
--export([start/0, stop/0, port/0, address/0, temperatura/1, dym/1, godzina/1, drzwiOtwarte/1, drzwiZamkniete/1, wlamanie/1]).
+-export([start/0, stop/0, port/0, address/0, temperatura/1, dym/1, godzina/1,realneWlamanie/1, falszyweWlamanie/1,  drzwiOtwarte/1, drzwiZamkniete/1, wlamanie/1]).
 % serwer aplikacji, centrum kontroli
 
 port() -> 5000.
@@ -153,17 +153,48 @@ godzina(Data) ->
     end.
 
 
+% funkcja pomocnicza do czujnika antywlamaniowego, tworzy log z godzina
+realneWlamanie(Data) ->
+    log("Godzina: " ++ integer_to_list(Data)),
+    log("Czujnik wykryl wlamanie!"),
+    przekazSygnal(alarm, "KTOS WLAMAL SIE DO BUDYNKU").
+
+% funkcja pomocnicza do czujnika antywlamaniowego, tworzy log z godzina
+falszyweWlamanie(Data) ->
+    log("Godzina: " ++ integer_to_list(Data)),
+    log("Falszywy alarm antywlamaniowy!").
 
 
 % kontroler czujnika antywlamaniowego
 wlamanie(nil) -> nil;
-wlamanie(Data) when Data < 7 ->
-  log("Godzina: " ++ integer_to_list(Data)),
-  log("Czujnik wykryl wlamanie!"),
-  przekazSygnal(alarm, "KTOS WLAMAL SIE DO BUDYNKU");
-wlamanie(Data) when Data >= 7 ->
-  log("Godzina: " ++ integer_to_list(Data)),
-  log("Falszywy alarm antywlamaniowy!").
+wlamanie(Data)  ->
+    case Data of
+        0 -> realneWlamanie(Data);
+        1 -> realneWlamanie(Data);
+        2 -> realneWlamanie(Data);
+        3 -> realneWlamanie(Data);
+        4 -> realneWlamanie(Data);
+        5 -> realneWlamanie(Data);
+        6 -> realneWlamanie(Data);
+        7 -> falszyweWlamanie(Data);
+        8 -> falszyweWlamanie(Data);
+        9 -> falszyweWlamanie(Data);
+        10 -> falszyweWlamanie(Data);
+        11 -> falszyweWlamanie(Data);
+        12 -> falszyweWlamanie(Data);
+        13 -> falszyweWlamanie(Data);
+        14 -> falszyweWlamanie(Data);
+        15 -> falszyweWlamanie(Data);
+        16 -> falszyweWlamanie(Data);
+        17 -> falszyweWlamanie(Data);
+        18 -> realneWlamanie(Data);
+        19 -> realneWlamanie(Data);
+        20 -> realneWlamanie(Data);
+        21 -> realneWlamanie(Data);
+        22 -> realneWlamanie(Data);
+        23 -> realneWlamanie(Data);
+        24 -> realneWlamanie(Data)
+    end.
 
 % kontroler miernika temperatury
 %temperaturaPowiadomienie(nil) -> nil;

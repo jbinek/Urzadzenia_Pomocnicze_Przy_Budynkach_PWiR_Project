@@ -16,7 +16,7 @@ unregister(ServerAddress, ServerPort, Id) ->
 
 send(ServerAddress, ServerPort, OperationId, Payload) ->
     {ok, Socket} = gen_udp:open(0, [binary, {active, false}]),
-    io:format("~p : -> ~p:~p [~p]~n", [OperationId, ServerAddress, ServerPort, Payload]),
+   % io:format("~p : -> ~p:~p [~p]~n", [OperationId, ServerAddress, ServerPort, Payload]),
     gen_udp:send(Socket, ServerAddress, ServerPort, term_to_binary(Payload)).
 
 % za pomocą UDP przesyła dane na serwer
