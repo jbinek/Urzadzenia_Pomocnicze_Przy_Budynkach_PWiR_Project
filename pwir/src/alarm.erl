@@ -1,7 +1,8 @@
 -module(alarm).
 -export([start/0, stop/0]).
 
-% alarm symuluje zachowanie alarmu
+% alarm symuluje zachowanie alarmu, powiadamia o wlamaniu kiedy czujnik wykrywa ruch w momencie kiedy drzwi sa zakmniete (18-6)
+% powiadamia o falszywm alarmie kiedy wykrycie nastapi w godzinach pracy (7-17)
 
 port() -> 8084.
 id() -> alarm.
@@ -44,7 +45,8 @@ stop() ->
 nasluchuj(Frame) ->
     case klient_UDP:nasluchuj(port()) of
         {_, _, Message} ->
-            io:format("Pokazanie okienka: ~p ~n", [Message]),
+            %io:format("Pokazanie okienka: ~p ~n", [Message]),
+            io:format("Pojawienie sie okienka z POWIADOMIENIEM: ~n"),
             D = wxMessageDialog:new (Frame, "POWIADOMIENIE: " ++ Message),
             wxMessageDialog:showModal (D);
         _ ->

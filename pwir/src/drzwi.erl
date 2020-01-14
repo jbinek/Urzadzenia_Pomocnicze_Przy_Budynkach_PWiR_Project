@@ -1,7 +1,8 @@
 -module(drzwi).
 -export([start/0, stop/0]).
 
-% air_conditioning symuluje zachowanie klimatyzacji
+% symuluje prace drzwi automatycznych, drzwi są otwarte w zależności od aktualnej godziny
+% zakladamy ze są otwarte w czasie pracy budynku: 7-17, a zamknięte 18-6
 
 port() -> 8088.
 id() -> drzwi.
@@ -9,7 +10,7 @@ id() -> drzwi.
 
 % START
 % Rejestruje id drzwi w centrum kontroli na serwerze
-% Zaczyna działanie klimatyzacji na podanym porcie
+% sprawia że drzwi są "aktywne"  na podanym porcie
 
 start() ->
   try

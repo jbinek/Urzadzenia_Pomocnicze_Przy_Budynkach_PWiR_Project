@@ -26,7 +26,7 @@ start() ->
 stop() ->
     try
         czujniki_UDP:unregister(centrum_kontroli:address(), centrum_kontroli:port(), id()),
-        io:format("Czujnik antywlamaniowy o ID = ~p kończy pracę ~n", [id()]),
+        io:format("Czujnik antywlamaniowy o ID = ~p konczy prace ~n", [id()]),
         kontroler_pid:kill(id())
     catch
         _:_ -> io:format("Czujnik antywlamaniowy nie jest uruchomiony!~n"),

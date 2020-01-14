@@ -50,7 +50,7 @@ start() ->
     io:format("Run process [Miernik temperatury]: ~p~n", [TempPID]),
     timer:sleep(timer:seconds(czasUruchomienia())),
 
-    KontrolDrzwiPID = spawn(fun () -> kontroler_drzwi:start() end),
+    KontrolDrzwiPID = spawn(fun () -> system_drzwi:start() end),
     io:format("Run process [Kontroler drzwi]: ~p~n", [KontrolDrzwiPID]),
     timer:sleep(timer:seconds(czasUruchomienia())),
 
@@ -70,7 +70,7 @@ stop() ->
     czujnik_antywlamaniowy:stop(),
     timer:sleep(timer:seconds(czasZatrzymania())),
 
-    kontroler_drzwi:stop(),
+    system_drzwi:stop(),
     timer:sleep(timer:seconds(czasZatrzymania())),
 
 

@@ -1,7 +1,7 @@
--module(kontroler_drzwi).
+-module(system_drzwi).
 -export([start/0, stop/0]).
 
-% symuluje zachowanie kontrolera drzwi
+% pelni role systemu odpowiadajcego za sterowanie drzwiami
 
 id() -> kontroler_drzwi.
 
