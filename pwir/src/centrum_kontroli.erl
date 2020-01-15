@@ -21,7 +21,6 @@ start() ->
 
 
         kontroler_pid:register(id(), self()),
-        nasluchuj(),
         start
     catch
         A:B -> io:format("Nie mozna uruchomic centrum kontorli: ~p, ~p~n", [A, B]),
